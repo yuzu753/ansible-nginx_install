@@ -1,0 +1,23 @@
+# webserversグループを対象にroot権限でtaks処理を行う
+- hosts: webservers
+  become: yes
+
+  tasks:
+# 最新版のnginxをインストール
+  - name: nginx install
+    yum:
+      name: nginx
+      state: latest
+# nginxの起動、及び自動起動設定
+  - name: nginx start
+    service:
+      name: nginx
+      state: started
+      enabled: yes
+
+ # /etc/nginx/nginx.confのkeepalive_timeoutの設定値変更
+  - name: nginx modify file
+    replace:
+      dest: /etc/nginx/nginx.conf
+      regexp: 'keepalive_timeout.*'
+      replace: 'keepalive_timeout   100;'

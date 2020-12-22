@@ -1,0 +1,14 @@
+# 対象サーバのグループを指定
+- hosts: webservers
+# 実行タスクの開始
+  tasks:
+
+# 実行するタスクの名前
+  - name: ping check
+# モジュール名
+    ping:
+    register: result
+
+  - name: debug
+    debug:
+     msg:"{{result}}"
